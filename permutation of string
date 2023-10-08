@@ -1,0 +1,61 @@
+#include<iostream>
+using namespace std;
+int noOfPermutation(int n){
+int s=1;
+    for(int i=n;i>0;i--){
+        s*=i;
+    }
+    return s;
+}
+void solve(char ch[],int n, int index,string *ans,int size,int &i){
+    if(index>=n){
+       for(int j=0;j<n;j++){
+        ans[i]+=ch[j];
+       }
+       i++;
+        return ;
+    }
+
+    
+           for(int j=index ; j<n;j++){
+                swap(ch[j],ch[index]);
+                solve(ch,n,index+1,ans,size,i);
+                swap(ch[j],ch[index]);
+            }
+    
+
+
+}
+void permutation(int num){
+    string m;
+   string mapping[10]={" ", "a","ab","abc","abcd","abcde","abcdef","abcdefg","abcdefgh","abcdefghi"};
+    for(int i=0;i<10;i++){
+        if(num == i){
+             m=mapping[i];
+        }
+    }
+    char ch[num];
+    for(int i=0;i<num;i++){
+        ch[i]=m[i];
+    }
+
+int size = noOfPermutation(num);
+     string *ans = new string[size];
+    int i=0;
+     for(int j=0;j<size;j++){
+        ans[j]="";
+    }
+       int index=0;
+         solve(ch,num,index,ans,size,i);
+    for(int j=0;j<size;j++){
+       
+        cout<<ans[j]<<" ";
+    }
+
+    delete[] ans;
+}
+int main(){
+    int num=3;
+    permutation(num);
+ 
+}
