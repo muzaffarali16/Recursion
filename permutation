@@ -1,0 +1,51 @@
+#include<iostream>
+using namespace std;
+int noOfPermutation(int n){
+int s=1;
+    for(int i=n;i>0;i--){
+        s*=i;
+    }
+    return s;
+}
+
+void solve(int num[],int n, int index, int *&ans,int size,int &i){
+            if(index>=n){
+               // ans[i++]=num;
+               for(int k=0;k<n;k++){
+                ans[i]+=num[k];
+                ans[i]*=10;
+               }
+               i++;
+               return;
+            }
+            for(int j=index ; j<n;j++){
+                swap(num[j],num[index]);
+                solve(num,n,index+1,ans,size,i);
+                swap(num[j],num[index]);
+            }
+}
+
+void permutation(int num[],int n){
+    int index=0;
+    int size = noOfPermutation(n);
+    //int ans[size];
+    int *ans = new int[size];
+    int i=0;
+     for(int j=0;j<size;j++){
+        ans[j]=0;
+    }
+
+    solve(num,n,index,ans,size,i);
+    for(int j=0;j<size;j++){
+        ans[j]/=10;
+        cout<<ans[j]<<" ";
+    }
+
+    delete[] ans;
+}
+int main(){
+
+    int num[3]={1,2,3};
+    permutation(num,3);
+ 
+}
