@@ -1,0 +1,36 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void solve(string num , vector<string> &ans, string mapping[], int index,string output){
+    if(index>=num.length()){
+        ans.push_back(output);
+        return;
+    }
+    int digit = num[index] - '0';
+    string value = mapping[digit];
+
+    for(int i=0;i<value.length();i++){
+        output.push_back(value[i]);
+         solve(num,ans,mapping,index+1,output);
+         output.pop_back();
+    }
+}
+
+void keypad(string num){
+      string output=" ";
+      vector<string> ans;
+      string mapping[10]={"", "" , "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+      int index =0;
+      solve(num,ans,mapping,index,output);
+
+      for (int  i = 0; i < ans.size(); i++)
+      {
+        cout<<ans[i]<<"  ";
+      }
+      
+};
+int main(){
+  string num = "23";
+  keypad(num);
+}
