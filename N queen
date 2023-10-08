@@ -1,0 +1,98 @@
+#include<iostream>
+using namespace std;
+
+bool isSafe(int **board,int n, int row,int col){
+       int x=row, y=col;
+
+       //for same row  x same y--
+       while(y>=0){
+        if(board[x][y]==1){
+            return false;
+        }
+        y--;
+       }
+
+        x=row; y=col;
+
+
+       // for upper diagnal x-- y--
+       while(x>=0 && y>=0){
+        if(board[x][y]==1){
+            return false;
+        }
+        x--;
+        y--; 
+       }
+
+  x=row; y=col;
+       //for lower diagonal x++ y--
+
+       while(x<n && y>=0){
+        if(board[x][y]==1){
+            return false;
+        }
+        x++;
+        y--; 
+       }
+
+       return true;
+}       
+
+bool solve(int ** &board , int n,int col){
+    if(col>=n){
+
+        return true;
+    }
+      
+         for (int row = 0; row < n; row++) {
+        if (isSafe(board, n, row, col)) {
+            board[row][col] = 1;
+            if (solve(board, n, col + 1)) {
+                return true;
+            }
+            board[row][col] = 0; // Backtrack
+        }
+    }
+
+      return false;
+}
+
+void nqueen(int n){
+    
+     int **board = new int *[n];
+     for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            board[i] = new int [n];
+        }
+     }
+
+     for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            board[i][j]=0;
+        }
+        
+     }
+
+ if(  solve(board,n,0)){
+
+ 
+
+     for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+          cout<<  board[i][j]<<"  ";
+        }
+        cout<<endl;
+        
+     }
+ }else{
+    cout<<"NO SOL"<<endl;
+ }
+
+        for (int i = 0; i < n; i++) {
+        delete[] board[i];
+    }
+    delete[] board;
+}
+int main(){
+  nqueen(3);
+}
